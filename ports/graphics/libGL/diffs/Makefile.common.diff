@@ -1,6 +1,6 @@
 --- Makefile.common.orig	2015-12-28 12:07:41 UTC
 +++ Makefile.common
-@@ -60,6 +60,7 @@ SHEBANG_FILES+=	src/mapi/mapi_abi.py
+@@ -60,6 +60,7 @@
  
  MASTERDIR=		${.CURDIR}/../../graphics/libGL
  PATCHDIR=		${MASTERDIR}/files
@@ -8,3 +8,13 @@
  WRKSRC=			${WRKDIR}/mesa-${MESADISTVERSION}
  DESCR=			${.CURDIR}/pkg-descr
  PLIST=			${.CURDIR}/pkg-plist
+@@ -75,8 +76,7 @@
+ CONFIGURE_ARGS+=	--enable-gbm
+ 
+ # libEGL, dri and clover need gallium enabled.
+-# the third option in --with-egl-platforms is wayland.
+-CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm
++CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm,wayland
+ 
+ CONFIGURE_ARGS+=	--enable-gles2
+ 
