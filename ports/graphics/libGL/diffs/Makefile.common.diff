@@ -8,13 +8,23 @@
  WRKSRC=			${WRKDIR}/mesa-${MESADISTVERSION}
  DESCR=			${.CURDIR}/pkg-descr
  PLIST=			${.CURDIR}/pkg-plist
-@@ -75,8 +76,7 @@
+@@ -75,11 +76,18 @@
  CONFIGURE_ARGS+=	--enable-gbm
  
  # libEGL, dri and clover need gallium enabled.
 -# the third option in --with-egl-platforms is wayland.
--CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm
++.if ${PORT_OPTIONS:MWAYLAND}
 +CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm,wayland
++LIB_DEPENDS+=		libwayland-client.so:${PORTSDIR}/graphics/wayland
++LIB_DEPENDS+=		libwayland-server.so:${PORTSDIR}/graphics/wayland
++.else
+ CONFIGURE_ARGS+=	--enable-egl --with-egl-platforms=x11,drm
++.endif
  
  CONFIGURE_ARGS+=	--enable-gles2
  
++WAYLAND_DESC=		Wayland display server support
++
+ # Clover (OpenCL).
+ .if ${OPSYS} == DragonFly || \
+ 	(${OPSYS} == FreeBSD && ${OSVERSION} >= 1000000 && \
